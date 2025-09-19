@@ -89,7 +89,7 @@ function initMap() {
 
   // Clear old markers
   map.eachLayer(layer => {
-    if (layer instanceof L.Marker) map.removeLayer(layer);
+    if (layer instanceof L.Marker || layer instanceof L.CircleMarker) map.removeLayer(layer);
   });
 
   // Add markers for areas
