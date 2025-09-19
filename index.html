@@ -12,13 +12,14 @@
       <button onclick="showPage('home')">Home</button>
       <button onclick="showPage('user')">User</button>
       <button onclick="showPage('municipality')">Municipality</button>
+      <button onclick="showPage('map')">Map</button>
     </nav>
   </header>
 
   <main>
     <section id="home" class="page">
       <h2>Welcome to Civic Connect</h2>
-      <p>A simple prototype with User and Municipality interfaces.</p>
+      <p>A simple prototype with User, Municipality and Map interfaces.</p>
     </section>
 
     <section id="user" class="page hidden">
@@ -38,9 +39,6 @@
 
         <button onclick="addPoints()">🗑️ Kachra Dale (Add Points)</button>
 
-        <h3>Area Map</h3>
-        <div class="map">[Dummy Map Placeholder]</div>
-
         <h3>Leaderboard</h3>
         <ul id="leaderboard"></ul>
       </div>
@@ -55,6 +53,13 @@
         <tr><td>102</td><td>Sneha</td><td>Area B</td><td>95</td></tr>
         <tr><td>103</td><td>Amit</td><td>Area C</td><td>70</td></tr>
       </table>
+    </section>
+
+    <section id="map" class="page hidden">
+      <h2>Area Segregation Map</h2>
+      <div id="mapContainer">
+        <!-- Circles will be added dynamically -->
+      </div>
     </section>
   </main>
 
