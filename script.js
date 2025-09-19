@@ -5,11 +5,14 @@ let users = [
   { id: 103, name: "Amit", area: "Area C", points: 70 },
 ];
 
+// Example town areas with coordinates (Nagpur city demo)
 let areas = [
-  { name: "Area A", x: 50, y: 60 },
-  { name: "Area B", x: 200, y: 100 },
-  { name: "Area C", x: 120, y: 200 },
+  { name: "Area A", coords: [21.1458, 79.0882] }, // Nagpur center
+  { name: "Area B", coords: [21.1700, 79.1000] }, // north side
+  { name: "Area C", coords: [21.1300, 79.0500] }  // south-west side
 ];
+
+let map;
 
 function showPage(pageId) {
   document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
@@ -17,7 +20,7 @@ function showPage(pageId) {
 
   if (pageId === "user" && currentUser) updateLeaderboard();
   if (pageId === "municipality") updateMunicipalityTable();
-  if (pageId === "map") drawMap();
+  if (pageId === "map") initMap();
 }
 
 function registerUser() {
@@ -76,27 +79,35 @@ function updateMunicipalityTable() {
   });
 }
 
-function drawMap() {
-  const container = document.getElementById("mapContainer");
-  container.innerHTML = "";
+function initMap() {
+  if (!map) {
+    map = L.map("realMap").setView([21.1458, 79.0882], 12); // Nagpur city center
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+  }
 
+  // Clear old markers
+  map.eachLayer(layer => {
+    if (layer instanceof L.Marker) map.removeLayer(layer);
+  });
+
+  // Add markers for areas
   areas.forEach(area => {
-    // Calculate avg points of this area
     const areaUsers = users.filter(u => u.area === area.name);
     let avgPoints = 0;
     if (areaUsers.length > 0) {
       avgPoints = areaUsers.reduce((sum, u) => sum + u.points, 0) / areaUsers.length;
     }
 
-    // Green if segregation good (>=100 points), Red if bad
     const color = avgPoints >= 100 ? "green" : "red";
+    const marker = L.circleMarker(area.coords, {
+      radius: 15,
+      color: color,
+      fillColor: color,
+      fillOpacity: 0.7
+    }).addTo(map);
 
-    const circle = document.createElement("div");
-    circle.className = "areaCircle";
-    circle.style.left = area.x + "px";
-    circle.style.top = area.y + "px";
-    circle.style.backgroundColor = color;
-    circle.title = `${area.name} - Avg Points: ${avgPoints}`;
-    container.appendChild(circle);
+    marker.bindPopup(`<b>${area.name}</b><br>Avg Points: ${avgPoints}`);
   });
 }
