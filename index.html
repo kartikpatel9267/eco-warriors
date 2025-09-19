@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Civic Connect</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
   <header>
@@ -19,7 +20,7 @@
   <main>
     <section id="home" class="page">
       <h2>Welcome to Civic Connect</h2>
-      <p>A simple prototype with User, Municipality and Map interfaces.</p>
+      <p>A prototype with User, Municipality, and Map interfaces.</p>
     </section>
 
     <section id="user" class="page hidden">
@@ -57,12 +58,11 @@
 
     <section id="map" class="page hidden">
       <h2>Area Segregation Map</h2>
-      <div id="mapContainer">
-        <!-- Circles will be added dynamically -->
-      </div>
+      <div id="realMap"></div>
     </section>
   </main>
 
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
