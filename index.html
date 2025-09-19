@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Civic Connect</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Civic Connect</h1>
+    <nav>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('user')">User</button>
+      <button onclick="showPage('municipality')">Municipality</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="page">
+      <h2>Welcome to Civic Connect</h2>
+      <p>A simple prototype with User and Municipality interfaces.</p>
+    </section>
+
+    <section id="user" class="page hidden">
+      <div id="register-form">
+        <h2>Register Profile</h2>
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="text" id="area" placeholder="Enter your area">
+        <button onclick="registerUser()">Register</button>
+      </div>
+
+      <div id="user-profile" class="hidden">
+        <h2>Your Profile</h2>
+        <p><strong>User ID:</strong> <span id="userId"></span></p>
+        <p><strong>Name:</strong> <span id="userName"></span></p>
+        <p><strong>Area:</strong> <span id="userArea"></span></p>
+
+        <h3>Area Map</h3>
+        <div class="map">[Dummy Map Placeholder]</div>
+
+        <h3>Leaderboard</h3>
+        <ul>
+          <li>Area A - 120 points</li>
+          <li>Area B - 95 points</li>
+          <li>Area C - 70 points</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="municipality" class="page hidden">
+      <h2>Municipality Dashboard</h2>
+      <p>View registered users (dummy data)</p>
+      <table>
+        <tr><th>User ID</th><th>Name</th><th>Area</th></tr>
+        <tr><td>101</td><td>Rahul</td><td>Area A</td></tr>
+        <tr><td>102</td><td>Sneha</td><td>Area B</td></tr>
+        <tr><td>103</td><td>Amit</td><td>Area C</td></tr>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
