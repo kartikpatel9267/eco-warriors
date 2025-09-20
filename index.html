@@ -2,92 +2,98 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Civic Connect App</title>
+  <title>Civic Connect</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
-  <nav>
+  <header>
     <h1>Civic Connect</h1>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('user')">User</button>
-    <button onclick="showPage('municipality')">Municipality</button>
-  </nav>
+    <nav>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('user')">User</button>
+      <button onclick="showPage('municipality')">Municipality</button>
+      <button onclick="showPage('map')">Map</button>
+    </nav>
+  </header>
 
-  <!-- Home Page -->
-  <section id="home" class="page">
-    <div class="hero">
-      <div class="hero-text">
-        <h2>🌍 Welcome to Civic Connect</h2>
-        <p>Together towards a <span class="highlight">Clean & Green</span> future.</p>
-        <p>Segregate waste, earn points, and make your city eco-friendly.</p>
-        <button onclick="showPage('user')">Get Started</button>
+  <main>
+    <!-- HOME PAGE -->
+    <section id="home" class="page">
+      <div class="hero">
+        <div class="hero-text">
+          <h2>🌍 Welcome to Civic Connect</h2>
+          <p>Together towards a <span class="highlight">Clean & Green</span> future.</p>
+          <p>Segregate waste, earn points, and make your city eco-friendly.</p>
+          <button onclick="showPage('user')">Get Started</button>
+        </div>
+        <div class="hero-image">
+          <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Green Tech">
+        </div>
       </div>
-      <div class="hero-image">
-        <img src="https://cdn-icons-png.flaticon.com/512/706/706164.png" alt="Green Tech">
-      </div>
-    </div>
 
-    <div class="features">
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2907/2907265.png" alt="Recycle">
-        <h3>Waste Segregation</h3>
-        <p>Sort biodegradable and non-biodegradable waste easily.</p>
+      <div class="features">
+        <div class="feature-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/2907/2907265.png" alt="Recycle">
+          <h3>Waste Segregation</h3>
+          <p>Sort biodegradable and non-biodegradable waste easily.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png" alt="Leaderboard">
+          <h3>Leaderboard</h3>
+          <p>Earn points and see your rank in the city leaderboard.</p>
+        </div>
+        <div class="feature-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/3208/3208754.png" alt="Green Map">
+          <h3>Green Map</h3>
+          <p>Track which areas are doing well in waste segregation.</p>
+        </div>
       </div>
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png" alt="Leaderboard">
+    </section>
+
+    <!-- USER PAGE -->
+    <section id="user" class="page hidden">
+      <div id="register-form">
+        <h2>Register Profile</h2>
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="text" id="area" placeholder="Enter your area (Area A / Area B / Area C)">
+        <button onclick="registerUser()">Register</button>
+      </div>
+
+      <div id="user-profile" class="hidden">
+        <h2>Your Profile</h2>
+        <p><strong>User ID:</strong> <span id="userId"></span></p>
+        <p><strong>Name:</strong> <span id="userName"></span></p>
+        <p><strong>Area:</strong> <span id="userArea"></span></p>
+        <p><strong>Points:</strong> <span id="userPoints">0</span></p>
+
+        <button onclick="addPoints()">🗑️ Kachra Dale (Add Points)</button>
+
         <h3>Leaderboard</h3>
-        <p>Earn points and see your rank in the city leaderboard.</p>
+        <ul id="leaderboard"></ul>
       </div>
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/3208/3208754.png" alt="Green Map">
-        <h3>Green Map</h3>
-        <p>Track which areas are doing well in waste segregation.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- User Page -->
-  <section id="user" class="page hidden">
-    <h2>User Interface</h2>
-    <form id="userForm">
-      <input type="text" id="name" placeholder="Enter Name" required>
-      <input type="text" id="area" placeholder="Enter Area" required>
-      <button type="submit">Create Profile</button>
-    </form>
-    <button onclick="addWaste()">♻️ Add Waste (Earn Points)</button>
-    <button onclick="showDashboard()">📊 View Dashboard</button>
-  </section>
-
-  <!-- Dashboard -->
-  <section id="dashboard" class="page hidden">
-    <h2>User Dashboard</h2>
-    <div id="dashboardContent"></div>
-    <button onclick="showPage('user')">⬅ Back to User</button>
-  </section>
-
-  <!-- Municipality Page -->
-  <section id="municipality" class="page hidden">
-    <h2>Municipality Interface</h2>
-    <div id="leaderboard">
-      <h3>Leaderboard</h3>
-      <table id="leaderboardTable">
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Area</th>
-          <th>Points</th>
-        </tr>
+    <!-- MUNICIPALITY PAGE -->
+    <section id="municipality" class="page hidden">
+      <h2>Municipality Dashboard</h2>
+      <p>View registered users (dummy data + new users)</p>
+      <table id="municipalityTable">
+        <tr><th>User ID</th><th>Name</th><th>Area</th><th>Points</th></tr>
+        <tr><td>101</td><td>Rahul</td><td>Area A</td><td>120</td></tr>
+        <tr><td>102</td><td>Sneha</td><td>Area B</td><td>95</td></tr>
+        <tr><td>103</td><td>Amit</td><td>Area C</td><td>70</td></tr>
       </table>
-    </div>
-    <div id="map">
-      <h3>Segregation Map</h3>
-      <img src="https://i.ibb.co/f8S6gRW/indian-town-map-demo.png" alt="Demo Town Map" style="width:100%; max-width:500px;">
-      <p><span style="color:green;">● Green</span> = Good Segregation</p>
-      <p><span style="color:red;">● Red</span> = Poor Segregation</p>
-    </div>
-  </section>
+    </section>
 
+    <!-- MAP PAGE -->
+    <section id="map" class="page hidden">
+      <h2>Area Segregation Map</h2>
+      <div id="realMap"></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
